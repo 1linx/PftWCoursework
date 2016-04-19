@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="postHolder">
+                <h1 class="postTitle" id="postTitle">Title</h1>
+                <p class="postContent" id="postContent">Content</p>
+                <p class="postAuthor" id="postAuthor">Author</p>
+            </div>
+
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-6 right-bar">
+            <h4>Similar Articles</h4>
+            <ul id="similarArticles" class="similarArticles">
+                <li class="listLink" id="similarArticle1"></li>
+                <li class="listLink" id="similarArticle2"></li>
+                <li class="listLink" id="similarArticle3"></li>
+            </ul>
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-1">
+            <hr>
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="previous postBtn">
+                    @* Load next post from json - thios should call a JS function *@
+                    <a id="prevBtn"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Previous Post</a>
+                </li>
+                <li class="next postBtn">
+                    @* Load next post from json - thios should call a JS function *@
+                    <a id="nextBtn" class="disabledBtn">Next Post &rarr;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        var currentPostId = 0;
+        var numberOfPosts = (@ViewBag.NumberOfPosts -1);
+        postProcessor(currentPostId);
+
+        $("#prevBtn").click(function () {
+            if (currentPostId != numberOfPosts) {
+                currentPostId++;
+                enableDisableButtons(currentPostId, numberOfPosts);
+                postProcessor(currentPostId);
+            }
+        });
+
+        $("#nextBtn").click(function () {
+            if (currentPostId != 0) {
+                currentPostId--;
+                enableDisableButtons(currentPostId, numberOfPosts);
+                postProcessor(currentPostId);
+            }
+        });
+    });
+</script>

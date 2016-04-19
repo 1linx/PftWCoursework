@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated && (User.IsInRole("admin")))
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Manage and Approve blogs", "Approve", "Posts")</li>
+        <li>@Html.ActionLink("Manage Keywords", "Index", "Keywords")</li>
+        <li>@Html.ActionLink("Manage Users", "EditUsers", "Manage")</li>
+    </ul>
+}
+else if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Manage your blogs", "Index", "Posts")</li>
+    </ul>
+
+}
+else
+{
+
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    </ul>
+}

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Blog.Platform2.Models.Post>
+
+@{
+    ViewBag.Title = "Approve";
+}
+
+<h2>Approve</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PostTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Keywords)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Approved)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @foreach (var keyword in item.Keywords)
+                {
+                <p>
+                    @keyword.KeywordText
+                </p>
+            }
+        </td>
+
+        <td>
+            @if (item.Approved == true)
+            {<span>Approved</span>}
+            else { 
+                <form method="post" action="~/Posts/ApprovePost/@item.PostId">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Approve" class="btn btn-primary" />
+                </form>
+            }
+            </td>
+        <td>
+            <form method="get" action="~/Posts/Edit/@item.PostId">
+                <input type="submit" value="Edit" class="btn btn-info" />
+            </form>
+        </td>
+        <td>
+            <form method="post" action="~/Posts/Delete/@item.PostId">
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </form>
+        </td>
+
+    </tr>
+}
+
+</table>
